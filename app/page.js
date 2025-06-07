@@ -122,7 +122,7 @@ export default function Home() {
                 <div className="brain-icon">🧠</div>
               </div>
               <h1 className="main-title">Welcome, Scholar</h1>
-              <p className="subtitle">Let's challange your curious mind.</p>
+              <p className="subtitle">Let&apos;s challange your curious mind.</p>
             </div>
 
             <div className="form-section">
@@ -135,7 +135,7 @@ export default function Home() {
                   type="text"
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Diabetes, Disney, or Democracy - what's on your mind!"
+                  placeholder="Diabetes, Disney, or Democracy - what&apos;s on your mind!"
                   className="topic-input"
                 />
               </div>
