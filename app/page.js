@@ -54,14 +54,10 @@ export default function Home() {
       });
 
       const data = await response.json();
-      console.log(data);
       
       const markdownText =
         data.choices?.[0]?.message?.content || "No response received.";
         
-        console.log(markdownText);
-        
-
       function sanitizeJSON(responseText) {
         // Remove LaTeX boxed syntax
         responseText = responseText.replace(/\\boxed\{([\s\S]*?)\}/g, "$1");
@@ -80,7 +76,6 @@ export default function Home() {
 
       // Usage:
       const cleanJson = sanitizeJSON(markdownText);
-      console.log(cleanJson);
 
       setQuizData(cleanJson);
       setQuizStarted(true);
