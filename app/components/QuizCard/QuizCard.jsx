@@ -7,7 +7,7 @@ import ResultCard from '../ResultCard/ResultCard';
 
 const QuizCard = (quizData) => {
   // Sample quiz data - in a real app, this would come from props or API
-  const {setTopic, setQuizStarted } = useContext(UseContext);
+  const {topic, setTopic, setQuizStarted } = useContext(UseContext);
   console.log(quizData);
   
 
@@ -94,7 +94,7 @@ const QuizCard = (quizData) => {
               </div>
             </div>
           </div>
-          <div className="topic-badge">{quizData.topic}</div>
+          <div className="topic-badge">{topic}</div>
         </div>
 
         <div className="question-section">

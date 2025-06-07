@@ -77,11 +77,11 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
     return "💪";
   };
   const getEncouragementMessage = (score) => {
-    if (score >= 90) return "Outstanding! You&apos;ve mastered this topic! 🌟";
-    if (score >= 80) return "Excellent work! You&apos;re doing great! 🎉";
-    if (score >= 70) return "Good job! You&apos;re on the right track! 👍";
+    if (score >= 90) return "Outstanding! You've mastered this topic! 🌟";
+    if (score >= 80) return "Excellent work! You're doing great! 🎉";
+    if (score >= 70) return "Good job! You're on the right track! 👍";
     if (score >= 60) return "Nice effort! Keep practicing! 📚";
-    return "Don&apos;t give up! Practice makes perfect! 💪";
+    return "Don't give up! Practice makes perfect! 💪";
   };
 
   // Get analysis based on score
@@ -95,7 +95,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
     } else if (score >= 60) {
       return {
         status: "Good Progress 📈",
-        message: "You&apos;re making progress but there&apos;s room for improvement.",
+        message: "You're making progress but there&apos;s room for improvement.",
         tip: "Review the concepts you missed and practice similar questions.",
       };
     } else {
