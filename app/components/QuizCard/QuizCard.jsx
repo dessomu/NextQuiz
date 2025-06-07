@@ -1,5 +1,5 @@
 'use client'
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext, useEffect} from 'react';
 import './QuizCard.css'; 
 import UseContext from '../../context/UseContext';
 import ResultCard from '../ResultCard/ResultCard';
@@ -7,10 +7,7 @@ import ResultCard from '../ResultCard/ResultCard';
 
 const QuizCard = (quizData) => {
   // Sample quiz data - in a real app, this would come from props or API
-  const {topic, setTopic, setQuizStarted } = useContext(UseContext);
-  console.log(quizData);
-  
-
+  const {topic, setTopic, setQuizStarted, setUsersResults } = useContext(UseContext);
 
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -35,6 +32,14 @@ const QuizCard = (quizData) => {
 
     setIsAnswered(true);
     setShowAnswer(true);
+
+    const userResult= {
+      question: currentQ.question,
+      selectedAnswer: currentQ.options[selectedAnswer],
+      correctAnswer: currentQ.options[currentQ.correctAnswer],
+      explanation: currentQ.explanation,
+    };
+    setUsersResults(prev => [...prev, userResult]);
 
     if (selectedAnswer === currentQ.correctAnswer) {
       setCorrectAnswers(prev => prev + 1);

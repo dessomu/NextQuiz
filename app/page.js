@@ -38,8 +38,8 @@ export default function Home() {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`, // Replace with your OpenRouter API key
-          "HTTP-Referer": "https://freequickquizapp.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
-          "X-Title": "qucickquiz", // Optional. Site title for rankings on openrouter.ai.
+          "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
+          "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
