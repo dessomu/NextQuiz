@@ -22,7 +22,7 @@ export default function Home() {
     setLoading(true);
     setError("");
 
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
 
     try {
       const prompt = `Generate ${numQuestions} quiz questions about ${topic} with 4 options and correct answer. Format as pure JSON array:
