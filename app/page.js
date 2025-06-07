@@ -89,7 +89,6 @@ export default function Home() {
       console.log(error.message);
     }
     setLoading(false);
-    setTopic("");
   }
 
   return (
