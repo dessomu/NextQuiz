@@ -6,12 +6,11 @@ import UseContext from "./UseContext";
 function UseContextProvider({ children }) {
   const [quizStarted, setQuizStarted] = useState(false);
   const [topic, setTopic] = useState("");
-  const [usersResults, setUsersResults] = useState([]);
   const [userResultAnalysis, setUserResultAnalysis] = useState("");
 
 
   return (
-    <UseContext.Provider value={{ quizStarted,setQuizStarted, topic,setTopic, usersResults, setUsersResults,userResultAnalysis, setUserResultAnalysis }}>
+    <UseContext.Provider value={{ quizStarted,setQuizStarted, topic,setTopic,userResultAnalysis, setUserResultAnalysis }}>
       {children}
     </UseContext.Provider>
   );

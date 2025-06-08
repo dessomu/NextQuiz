@@ -7,7 +7,7 @@ import ResultCard from '../ResultCard/ResultCard';
 
 const QuizCard = (quizData) => {
   // Sample quiz data - in a real app, this would come from props or API
-  const {topic, setTopic, setQuizStarted, userResults, setUsersResults,userResultAnalysis, setUserResultAnalysis } = useContext(UseContext);
+  const {topic, setTopic, setQuizStarted,userResultAnalysis, setUserResultAnalysis } = useContext(UseContext);
 
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -18,6 +18,8 @@ const QuizCard = (quizData) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [usersResults, setUsersResults] = useState([]);
+  
 
   const currentQ =quizData.quizData[currentQuestion];
   const totalQuestions = quizData.quizData.length;
@@ -34,13 +36,13 @@ const QuizCard = (quizData) => {
     setIsAnswered(true);
     setShowAnswer(true);
 
-    const userResult= {
+    const userResultObj= {
       question: currentQ.question,
       selectedAnswer: currentQ.options[selectedAnswer],
       correctAnswer: currentQ.options[currentQ.correctAnswer],
       explanation: currentQ.explanation,
     };
-    setUsersResults(prev => [...prev, userResult]);
+    setUsersResults(prev => [...prev, userResultObj]);
 
     if (selectedAnswer === currentQ.correctAnswer) {
       setCorrectAnswers(prev => prev + 1);
@@ -51,7 +53,7 @@ const QuizCard = (quizData) => {
 
   async function getAIAnalysis() {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
-    const prompt = `Analyze these answers ${userResults} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
+    const prompt = `Analyze these answers ${usersResults} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
 
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -73,8 +75,6 @@ const QuizCard = (quizData) => {
         })
       });
       const analysisData = await response.json();
-      console.log("Analysis Data:", analysisData);
-      
       const analysisText =  analysisData.choices?.[0]?.message?.content || "No response received.";
       console.log("Analysis Text:", analysisText);
       return analysisText;
@@ -93,13 +93,14 @@ const QuizCard = (quizData) => {
       setShowAnswer(false);
       setIsAnswered(false);
     } else {
-      setQuizCompleted(true);
       setAnalysisLoading(true);
-      console.log(userResults);
+      console.log(usersResults);
 
       const analysis = getAIAnalysis();
       setUserResultAnalysis(analysis);
       console.log(analysis);
+
+      setQuizCompleted(true);
     }
   };
 
