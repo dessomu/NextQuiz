@@ -49,33 +49,6 @@ const QuizCard = (quizData) => {
     }
   };
 
-  const handleNext = () => {
-    if (currentQuestion < totalQuestions - 1) {
-      setCurrentQuestion(prev => prev + 1);
-      setSelectedAnswer(null);
-      setShowAnswer(false);
-      setIsAnswered(false);
-    } else {
-      setQuizCompleted(true);
-      setAnalysisLoading(true);
-    }
-  };
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswer(null);
-    setCorrectAnswers(0);
-    setIncorrectAnswers(0);
-    setShowAnswer(false);
-    setIsAnswered(false);
-    setQuizCompleted(false);
-    setQuizStarted(false);
-    setTopic("");
-    setUserResultAnalysis("");
-    setUsersResults([]);
-    setAnalysisLoading(false);
-  };
-
   async function getAIAnalysis() {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
     const prompt = `Analyze these answers ${userResults} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
@@ -100,19 +73,51 @@ const QuizCard = (quizData) => {
         })
       });
       const analysisData = await response.json();
+      console.log("Analysis Data:", analysisData);
+      
       const analysisText =  analysisData.choices?.[0]?.message?.content || "No response received.";
+      console.log("Analysis Text:", analysisText);
       return analysisText;
+      
     } catch (error) {
       console.log("Error fetching analysis:", error.message);
       return "Error fetching analysis.";
     }
   }
-  useEffect(() => {
-   const analysis = getAIAnalysis();
-   setUserResultAnalysis(analysis);
-   console.log(analysis);
-   
-  }, [setQuizCompleted]);
+
+
+  const handleNext = () => {
+    if (currentQuestion < totalQuestions - 1) {
+      setCurrentQuestion(prev => prev + 1);
+      setSelectedAnswer(null);
+      setShowAnswer(false);
+      setIsAnswered(false);
+    } else {
+      setQuizCompleted(true);
+      setAnalysisLoading(true);
+      console.log(userResults);
+
+      const analysis = getAIAnalysis();
+      setUserResultAnalysis(analysis);
+      console.log(analysis);
+    }
+  };
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setCorrectAnswers(0);
+    setIncorrectAnswers(0);
+    setShowAnswer(false);
+    setIsAnswered(false);
+    setQuizCompleted(false);
+    setQuizStarted(false);
+    setTopic("");
+    setUserResultAnalysis("");
+    setUsersResults([]);
+    setAnalysisLoading(false);
+  };
+
 
   if (quizCompleted) {
     return (
