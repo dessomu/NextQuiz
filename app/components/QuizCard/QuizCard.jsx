@@ -7,7 +7,7 @@ import ResultCard from '../ResultCard/ResultCard';
 
 const QuizCard = (quizData) => {
   // Sample quiz data - in a real app, this would come from props or API
-  const {topic, setTopic, setQuizStarted, userResults, setUsersResults, setUserResultAnalysis } = useContext(UseContext);
+  const {topic, setTopic, setQuizStarted, userResults, setUsersResults,userResultAnalysis, setUserResultAnalysis } = useContext(UseContext);
 
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -119,7 +119,7 @@ const QuizCard = (quizData) => {
   };
 
 
-  if (quizCompleted) {
+  if (quizCompleted && userResultAnalysis !== "") {
     return (
       <div className="quiz-card">
       <ResultCard resetQuiz={resetQuiz} correctAnswers={correctAnswers} totalQuestions={totalQuestions}/>
@@ -197,9 +197,9 @@ const QuizCard = (quizData) => {
               <button className="next-button" onClick={handleNext}>
                 <span>{currentQuestion < totalQuestions - 1 ? '➡️' : ''}</span>
                 {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show My Score'}
-                {analysisLoading && (
-                  <span className="loading-icon">⏳</span>
-                )}
+                {analysisLoading ? 
+                  <span className="timer-icon">⏳</span> : " "
+                }
               </button>
             )}
           </div>
