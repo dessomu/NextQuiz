@@ -65,7 +65,7 @@ const AnimatedCircle = ({percentage}) => {
 
 // Demo App
 const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
-  const { topic } = useContext(UseContext);
+  const { topic, userResultAnalysis } = useContext(UseContext);
   const percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
   // Get celebration emoji based on score
@@ -89,20 +89,14 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
     if (score >= 80) {
       return {
         status: "Nailed It! ✅",
-        message: "You have a solid understanding of this topic.",
-        tip: "Try more challenging questions to deepen your knowledge.",
       };
     } else if (score >= 60) {
       return {
         status: "Good Progress 📈",
-        message: "You're making progress but there&apos;s room for improvement.",
-        tip: "Review the concepts you missed and practice similar questions.",
       };
     } else {
       return {
         status: "Need More Practice 📖",
-        message: "This topic needs more attention.",
-        tip: "Focus on fundamentals and practice regularly to improve.",
       };
     }
   };
@@ -131,8 +125,8 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            <p className="analysis-message">{analysis.message}</p>
-            <p className="analysis-tip">{analysis.tip}</p>
+            {/* <p className="analysis-message">{analysis.message}</p> */}
+            <p className="analysis-tip">{userResultAnalysis}</p>
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">

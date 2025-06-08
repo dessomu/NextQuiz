@@ -7,7 +7,7 @@ import ResultCard from '../ResultCard/ResultCard';
 
 const QuizCard = (quizData) => {
   // Sample quiz data - in a real app, this would come from props or API
-  const {topic, setTopic, setQuizStarted, setUsersResults } = useContext(UseContext);
+  const {topic, setTopic, setQuizStarted, userResults, setUsersResults, setUserResultAnalysis } = useContext(UseContext);
 
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -17,6 +17,7 @@ const QuizCard = (quizData) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
 
   const currentQ =quizData.quizData[currentQuestion];
   const totalQuestions = quizData.quizData.length;
@@ -56,6 +57,7 @@ const QuizCard = (quizData) => {
       setIsAnswered(false);
     } else {
       setQuizCompleted(true);
+      setAnalysisLoading(true);
     }
   };
 
@@ -69,9 +71,48 @@ const QuizCard = (quizData) => {
     setQuizCompleted(false);
     setQuizStarted(false);
     setTopic("");
+    setUserResultAnalysis("");
+    setUsersResults([]);
+    setAnalysisLoading(false);
   };
 
-  
+  async function getAIAnalysis() {
+    const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
+    const prompt = `Analyze these answers ${userResults} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`, // Replace with your OpenRouter API key
+          "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
+          "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "model": "deepseek/deepseek-r1-0528:free",
+          "messages": [
+            {
+              "role": "user",
+              "content": prompt,
+            }
+          ]
+        })
+      });
+      const analysisData = await response.json();
+      const analysisText =  analysisData.choices?.[0]?.message?.content || "No response received.";
+      return analysisText;
+    } catch (error) {
+      console.log("Error fetching analysis:", error.message);
+      return "Error fetching analysis.";
+    }
+  }
+  useEffect(() => {
+   const analysis = getAIAnalysis();
+   setUserResultAnalysis(analysis);
+   console.log(analysis);
+   
+  }, [setQuizCompleted]);
 
   if (quizCompleted) {
     return (
@@ -151,6 +192,9 @@ const QuizCard = (quizData) => {
               <button className="next-button" onClick={handleNext}>
                 <span>{currentQuestion < totalQuestions - 1 ? '➡️' : ''}</span>
                 {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show My Score'}
+                {analysisLoading && (
+                  <span className="loading-icon">⏳</span>
+                )}
               </button>
             )}
           </div>
