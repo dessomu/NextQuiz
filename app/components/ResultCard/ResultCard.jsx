@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./result.css";
 import UseContext from "../../context/UseContext";
+import ReactMarkdown from 'react-markdown';
 
 const AnimatedCircle = ({percentage}) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
@@ -126,7 +127,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
             </h3>
             <div className="analysis-status">{analysis.status}</div>
             {/* <p className="analysis-message">{analysis.message}</p> */}
-            <p className="analysis-tip">{userResultAnalysis}</p>
+            <ReactMarkdown className="analysis-tip">{userResultAnalysis}</ReactMarkdown>
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">
