@@ -40,9 +40,9 @@ const QuizCard = (quizData) => {
 
     const userResultObj= {
       question: currentQ.question,
-      usersSelectedAnswer: currentQ.options[selectedAnswer],
-      rightAnswer: currentQ.options[currentQ.correctAnswer],
-      detailedAnswer: currentQ.explanation,
+      userAnswer: currentQ.options[selectedAnswer],
+      correctAnswer: currentQ.options[currentQ.correctAnswer],
+      explanation: currentQ.explanation,
     };
     setUsersResults(prev => [...prev, userResultObj]);
 
@@ -55,7 +55,9 @@ const QuizCard = (quizData) => {
 
   async function getAIAnalysis() {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
-    const prompt = `Analyze these answers ${usersResults} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
+    const jsonString =  JSON.stringify(usersResults, null, 2);
+    
+    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
 
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
