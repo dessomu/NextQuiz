@@ -1,5 +1,5 @@
 'use client'
-import React, { useState,useContext, useEffect} from 'react';
+import React, { useState,useContext, useEffect, use} from 'react';
 import './QuizCard.css'; 
 import UseContext from '../../context/UseContext';
 import ResultCard from '../ResultCard/ResultCard';
@@ -86,23 +86,30 @@ const QuizCard = (quizData) => {
   }
 
 
-  const handleNext = () => {
+
+  const handleNext = async () => {
     if (currentQuestion < totalQuestions - 1) {
       setCurrentQuestion(prev => prev + 1);
       setSelectedAnswer(null);
       setShowAnswer(false);
       setIsAnswered(false);
-    } else {
-      setAnalysisLoading(true);
-      console.log(usersResults);
+    }else {
+      if (usersResults.length  !== totalQuestions) return;
 
-      const analysis = getAIAnalysis();
-      setUserResultAnalysis(analysis);
-      console.log(analysis);
+      try {
+        setAnalysisLoading(true);
 
-      setQuizCompleted(true);
+        const analysis = await getAIAnalysis();
+        setUserResultAnalysis(analysis);
+        setQuizCompleted(true);
+      } catch (error) {
+        console.error("Failed to get analysis:", error);
+      } finally {
+        setAnalysisLoading(false);
+      }
     }
   };
+
 
   const resetQuiz = () => {
     setCurrentQuestion(0);
@@ -120,7 +127,7 @@ const QuizCard = (quizData) => {
   };
 
 
-  if (quizCompleted && userResultAnalysis !== "") {
+  if (quizCompleted && userResultAnalysis) {
     return (
       <div className="quiz-card">
       <ResultCard resetQuiz={resetQuiz} correctAnswers={correctAnswers} totalQuestions={totalQuestions}/>
@@ -197,7 +204,7 @@ const QuizCard = (quizData) => {
             ) : (
               <button className="next-button" onClick={handleNext}>
                 <span>{currentQuestion < totalQuestions - 1 ? '➡️' : ''}</span>
-                {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show My Score'}
+                {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show My Score '}
                 {analysisLoading ? 
                   <span className="timer-icon">⏳</span> : " "
                 }

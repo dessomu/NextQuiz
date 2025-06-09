@@ -64,7 +64,7 @@ const AnimatedCircle = ({percentage}) => {
   );
 };
 
-// Demo App
+// ResultCard component
 const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   const { topic, userResultAnalysis } = useContext(UseContext);
   const percentage = Math.round((correctAnswers / totalQuestions) * 100);
@@ -85,7 +85,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
     return "Don't give up! Practice makes perfect! 💪";
   };
 
-  // Get analysis based on score
+  // Get analysis heading based on score
   const getAnalysis = (score) => {
     if (score >= 80) {
       return {
@@ -126,8 +126,8 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            {/* <p className="analysis-message">{analysis.message}</p> */}
-            <ReactMarkdown className="analysis-tip">{userResultAnalysis}</ReactMarkdown>
+            <ReactMarkdown className="analysis-message">{userResultAnalysis}</ReactMarkdown>
+            {/* <ReactMarkdown className="analysis-tip">{userResultAnalysis}</ReactMarkdown> */}
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">

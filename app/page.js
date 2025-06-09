@@ -43,7 +43,7 @@ export default function Home() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          "model": "deepseek/deepseek-r1-0528:free",
+          "model": "deepseek/deepseek-r1-0528-qwen3-8b:free",
           "messages": [
             {
               "role": "user",
@@ -57,6 +57,7 @@ export default function Home() {
       
       const markdownText =
         data.choices?.[0]?.message?.content || "No response received.";
+        
         
       function sanitizeJSON(responseText) {
         // Remove LaTeX boxed syntax
@@ -127,7 +128,7 @@ export default function Home() {
                 <input
                   id="topic"
                   type="text"
-                  value={topic}
+                  value={topic || ""}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="Diabetes, Disney, or Democracy - what&apos;s on your mind!"
                   className="topic-input"
