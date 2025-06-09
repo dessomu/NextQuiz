@@ -126,7 +126,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            <ReactMarkdown className="analysis-message">{userResultAnalysis}</ReactMarkdown>
+            <ReactMarkdown >{userResultAnalysis}</ReactMarkdown>
             {/* <ReactMarkdown className="analysis-tip">{userResultAnalysis}</ReactMarkdown> */}
           </div>
         </div>

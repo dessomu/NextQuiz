@@ -25,7 +25,7 @@ export default function Home() {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
 
     try {
-      const prompt = `Generate ${numQuestions} quiz questions about ${topic} with 4 options and correct answer. Format as pure JSON array:
+      const prompt = `Generate ${numQuestions} quiz questions about ${topic} with 4 options and correct answer. Respond with valid JSON only. Do not include comments, explanations, or extra characters. The response should strictly be a JSON object or array. Format as JSON array:
       [{
         id: "unique number",
         question: "question text",
@@ -43,7 +43,7 @@ export default function Home() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          "model": "deepseek/deepseek-r1-0528-qwen3-8b:free",
+          "model": "deepseek/deepseek-r1-0528:free",
           "messages": [
             {
               "role": "user",
@@ -57,6 +57,8 @@ export default function Home() {
       
       const markdownText =
         data.choices?.[0]?.message?.content || "No response received.";
+        console.log("Markdown Text:", markdownText);
+        
         
         
       function sanitizeJSON(responseText) {

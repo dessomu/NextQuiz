@@ -1,5 +1,5 @@
 'use client'
-import React, { useState,useContext, useEffect, use} from 'react';
+import React, { useState,useContext} from 'react';
 import './QuizCard.css'; 
 import UseContext from '../../context/UseContext';
 import ResultCard from '../ResultCard/ResultCard';
@@ -17,6 +17,7 @@ const QuizCard = (quizData) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [usersResults, setUsersResults] = useState([]);
   
@@ -24,9 +25,10 @@ const QuizCard = (quizData) => {
   const currentQ =quizData.quizData[currentQuestion];
   const totalQuestions = quizData.quizData.length;
 
-  const handleAnswerSelect = (answerIndex) => {
+  const handleAnswerSelect = (index) => {
+    
     if (!isAnswered) {
-      setSelectedAnswer(answerIndex);
+      setSelectedAnswer(index);
     }
   };
 
@@ -38,9 +40,9 @@ const QuizCard = (quizData) => {
 
     const userResultObj= {
       question: currentQ.question,
-      selectedAnswer: currentQ.options[selectedAnswer],
-      correctAnswer: currentQ.options[currentQ.correctAnswer],
-      explanation: currentQ.explanation,
+      usersSelectedAnswer: currentQ.options[selectedAnswer],
+      rightAnswer: currentQ.options[currentQ.correctAnswer],
+      detailedAnswer: currentQ.explanation,
     };
     setUsersResults(prev => [...prev, userResultObj]);
 
@@ -80,7 +82,7 @@ const QuizCard = (quizData) => {
       return analysisText;
       
     } catch (error) {
-      console.log("Error fetching analysis:", error.message);
+      console.error("Error fetching analysis:", error.message);
       return "Error fetching analysis.";
     }
   }
@@ -94,10 +96,11 @@ const QuizCard = (quizData) => {
       setShowAnswer(false);
       setIsAnswered(false);
     }else {
-      if (usersResults.length  !== totalQuestions) return;
 
       try {
         setAnalysisLoading(true);
+        console.log(usersResults);
+        
 
         const analysis = await getAIAnalysis();
         setUserResultAnalysis(analysis);
@@ -163,6 +166,7 @@ const QuizCard = (quizData) => {
             {currentQ.options.map((option, index) => (
               <div
                 key={index}
+                onClick={() => handleAnswerSelect(index)}
                 className={`option ${
                   selectedAnswer === index ? 'selected' : ''
                 } ${
@@ -170,7 +174,6 @@ const QuizCard = (quizData) => {
                 } ${
                   showAnswer && selectedAnswer === index && index !== currentQ.correctAnswer ? 'incorrect' : ''
                 } ${isAnswered ? 'disabled' : ''}`}
-                onClick={() => handleAnswerSelect(index)}
               >
                 <div className="option-letter">
                   {String.fromCharCode(65 + index)}
