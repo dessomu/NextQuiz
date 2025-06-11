@@ -118,7 +118,7 @@ export default function Home() {
               <div className="icon-wrapper">
                 <div className="brain-icon">🧠</div>
               </div>
-              <h1 className="main-title">Hey, I'm Nemo</h1>
+              <h1 className="main-title">Hey, I&apos;m Nemo</h1>
               <p className="subtitle">Let me craft challenging quizzes and break down your knowledge with detailed analysis.</p>
             </div>
 
