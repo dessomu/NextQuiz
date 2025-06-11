@@ -209,7 +209,7 @@ const QuizCard = (quizData) => {
             ) : (
               <button className="next-button" onClick={handleNext}>
                 <span>{currentQuestion < totalQuestions - 1 ? '➡️' : ''}</span>
-                {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show My Score '}
+                {currentQuestion < totalQuestions - 1 ? 'Next, Please' : 'Show Detailed Analysis '}
                 {analysisLoading ? 
                   <span className="timer-icon">⏳</span> : " "
                 }

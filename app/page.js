@@ -118,15 +118,15 @@ export default function Home() {
               <div className="icon-wrapper">
                 <div className="brain-icon">🧠</div>
               </div>
-              <h1 className="main-title">Welcome, Scholar</h1>
-              <p className="subtitle">Let&apos;s challange your curious mind.</p>
+              <h1 className="main-title">Hey, I'm Nemo</h1>
+              <p className="subtitle">Let me craft challenging quizzes and break down your knowledge with detailed analysis.</p>
             </div>
 
             <div className="form-section">
               <div className="input-group">
-                <label htmlFor="topic" className="input-label">
+                {/* <label htmlFor="topic" className="input-label">
                   Topic: {""}
-                </label>
+                </label> */}
                 <input
                   id="topic"
                   type="text"
@@ -139,7 +139,7 @@ export default function Home() {
 
               <button onClick={generateQuiz} className={`${loading ? "start-button loading" : "start-button"}`}>
                 {!loading && <span className="button-icon">⚡</span>}
-                {loading ? "Get Ready.." : "Test My Knowledge"}
+                {loading ? "Crafting.." : "Start"}
                 {loading && <span className="timer-icon">⏳</span>}
               </button>
             </div>

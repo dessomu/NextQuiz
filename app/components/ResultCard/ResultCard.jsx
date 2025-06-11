@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./result.css";
 import UseContext from "../../context/UseContext";
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const AnimatedCircle = ({percentage}) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
@@ -69,14 +70,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   const { topic, userResultAnalysis } = useContext(UseContext);
   const percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
-  // Get celebration emoji based on score
-  const getCelebrationEmoji = (score) => {
-    if (score >= 90) return "🎉";
-    if (score >= 80) return "🎊";
-    if (score >= 70) return "👏";
-    if (score >= 60) return "👍";
-    return "💪";
-  };
+  // Get Encouragement Message based on score
   const getEncouragementMessage = (score) => {
     if (score >= 90) return "Outstanding! You've mastered this topic! 🌟";
     if (score >= 80) return "Excellent work! You're doing great! 🎉";
@@ -107,7 +101,6 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   return (
     <>
       <div className="completion-section">
-        <div className="completion-icon">{getCelebrationEmoji(percentage)}</div>
         <h2 className="completion-title">Another Step Forward</h2>
         <h3>{topic}</h3>
         <AnimatedCircle percentage={percentage} />
@@ -126,8 +119,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            <ReactMarkdown >{userResultAnalysis}</ReactMarkdown>
-            {/* <ReactMarkdown className="analysis-tip">{userResultAnalysis}</ReactMarkdown> */}
+            <ReactMarkdown remarkPlugins={[remarkGfm]} >{userResultAnalysis}</ReactMarkdown>
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">
