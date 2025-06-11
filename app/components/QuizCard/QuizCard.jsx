@@ -57,7 +57,7 @@ const QuizCard = (quizData) => {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
     const jsonString =  JSON.stringify(usersResults, null, 2);
     
-    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, actionable analysis within 2-3 lines.`;
+    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, consice, actionable analysis within 2-3 lines. Keep the lines organized and add appropriate emojis to make it engaging.`;
 
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
