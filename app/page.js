@@ -129,7 +129,7 @@ export default function Home() {
                   type="text"
                   value={topic || ""}
                   onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Diabetes, Disney, or Democracy - what&apos;s on your mind!"
+                  placeholder="Diabetes, Disney, or Democracy  - what&apos;s on your mind!"
                   className="topic-input"
                 />
               </div>

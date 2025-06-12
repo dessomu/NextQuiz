@@ -59,7 +59,7 @@ const QuizCard = (quizData) => {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
     const jsonString =  JSON.stringify(usersResults, null, 2);
     
-    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, consice, actionable analysis within 2-3 lines. Keep the lines organized and add appropriate emojis to make it engaging.`;
+    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, consice, actionable analysis within 2-3 lines. Keep the lines organized and add appropriate emojis to make it engaging. Don't need to show the score.`;
 
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -90,8 +90,6 @@ const QuizCard = (quizData) => {
       return "Error fetching analysis.";
     }
   }
-
-
 
   const handleNext = async () => {
     if (currentQuestion < totalQuestions - 1) {

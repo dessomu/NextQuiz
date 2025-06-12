@@ -119,7 +119,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            <ReactMarkdown  >{userResultAnalysis}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={remarkGfm} >{userResultAnalysis}</ReactMarkdown>
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">
