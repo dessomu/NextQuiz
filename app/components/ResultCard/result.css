@@ -153,20 +153,7 @@
     margin-bottom: 5px;
   }
 
-  .analysis-message {
-    font-size: 14px;
-    color: #6b7280;
-    line-height: 1.5;
-    margin-bottom: 8px;
-    text-align: left;
-  }
 
-  .analysis-tip {
-    font-size: 13px;
-    color: #667eea;
-    font-weight: 500;
-    line-height: 1.4;
-  }
   @media (max-width:480px ) {
     .completion-icon{
       font-size: 1.5rem;

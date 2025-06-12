@@ -345,19 +345,20 @@ animation: float6 10s ease-in-out infinite;
     margin: 0;
   }
   .header-section {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
   .brain-icon{
     font-size: 2rem;
   }
   .main-title{
     font-size: 1.5rem;
+    margin-bottom: 14px;
   }
   .subtitle{
     font-size: 0.9rem;
   }
   .topic-input{
-    padding: 8px;
+    padding: 12px;
   }
   .input-group{
     margin-bottom: 15px;

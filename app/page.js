@@ -124,9 +124,6 @@ export default function Home() {
 
             <div className="form-section">
               <div className="input-group">
-                {/* <label htmlFor="topic" className="input-label">
-                  Topic: {""}
-                </label> */}
                 <input
                   id="topic"
                   type="text"
