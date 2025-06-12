@@ -26,7 +26,7 @@ const QuizCard = (quizData) => {
   const totalQuestions = quizData.quizData.length;
 
   const handleAnswerSelect = (index) => {
-    
+    console.log("option clicked:", index);
     if (!isAnswered) {
       setSelectedAnswer(index);
     }
@@ -34,8 +34,10 @@ const QuizCard = (quizData) => {
 
   const handleSubmit = () => {
     if (selectedAnswer === null) return;
+    console.log(selectedAnswer);
+    console.log(typeof selectedAnswer);
 
-    setIsAnswered(true);
+    setIsAnswered(prev=>!prev);
     setShowAnswer(true);
 
     const userResultObj= {
@@ -96,7 +98,7 @@ const QuizCard = (quizData) => {
       setCurrentQuestion(prev => prev + 1);
       setSelectedAnswer(null);
       setShowAnswer(false);
-      setIsAnswered(false);
+      setIsAnswered(prev => !prev);
     }else {
 
       try {

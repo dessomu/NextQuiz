@@ -30,7 +30,7 @@ export default function Home() {
         id: "unique number",
         question: "question text",
         options: ["a", "b", "c", "d"],
-        correctAnswer: "index",
+        correctAnswer: "answer index",
         explanation: "explanation text"
       }]`;
 
