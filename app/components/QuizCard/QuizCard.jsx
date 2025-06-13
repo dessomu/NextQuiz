@@ -59,7 +59,27 @@ const QuizCard = (quizData) => {
     const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
     const jsonString =  JSON.stringify(usersResults, null, 2);
     
-    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide a short, insightful, consice, actionable analysis within 2-3 lines. Keep the lines organized and add appropriate emojis to make it engaging. Don't need to show the score.`;
+    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide analysis in this JSON format: {
+  "analysis": {
+    "solidKnowledge": [
+      "knowledge point 1- within 3-5 words",
+      "knowledge point 2 - within 3-5 words",
+      "knowledge point 3 - within 3-5 words"
+    ],
+    "areasToImprove": [
+      "improvement point 1 - within 3-5 words",
+      "improvement point 2 - within 3-5 words",
+      "improvement point 3 - within 3-5 words"
+    ],
+    "actionPlan": [
+      "action plan 1 - within 3-5 words",
+      "action plan 2 - within 3-5 words",
+      "action plan 3 - within 3-5 words"
+      
+    ]
+  }
+}
+.Do not include comments, explanations, or extra characters. The response should strictly be a JSON object or array.`;
 
     try {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -81,9 +101,16 @@ const QuizCard = (quizData) => {
         })
       });
       const analysisData = await response.json();
-      const analysisText =  analysisData.choices?.[0]?.message?.content || "No response received.";
+      let analysisText =  analysisData.choices?.[0]?.message?.content || "No response received.";
+
+      // Clean known unwanted markdown wrappers
+      analysisText = analysisText.replace(/```json|```/g, "").trim();
       console.log("Analysis Text:", analysisText);
-      return analysisText;
+
+      // parsing the response text to extract JSON data
+      const analysis = JSON.parse(analysisText);
+      
+      return analysis;
       
     } catch (error) {
       console.error("Error fetching analysis:", error.message);
@@ -104,8 +131,8 @@ const QuizCard = (quizData) => {
         console.log(usersResults);
         
 
-        const analysis = await getAIAnalysis();
-        setUserResultAnalysis(analysis);
+        const fetchedAnalysis = await getAIAnalysis();
+        setUserResultAnalysis(fetchedAnalysis);
         setQuizCompleted(true);
       } catch (error) {
         console.error("Failed to get analysis:", error);

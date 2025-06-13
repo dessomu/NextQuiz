@@ -3,12 +3,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./result.css";
 import UseContext from "../../context/UseContext";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 const AnimatedCircle = ({percentage}) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
- 
 
   // Animate the percentage on mount
   useEffect(() => {
@@ -78,7 +75,6 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
     if (score >= 60) return "Nice effort! Keep practicing! 📚";
     return "Don't give up! Practice makes perfect! 💪";
   };
-
   // Get analysis heading based on score
   const getAnalysis = (score) => {
     if (score >= 80) {
@@ -97,6 +93,9 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   };
 
   const analysis = getAnalysis(percentage);
+  const solidKnowledge = userResultAnalysis?.analysis?.solidKnowledge || [];
+  const areasToImprove = userResultAnalysis?.analysis?.areasToImprove || [];
+  const actionPlan = userResultAnalysis?.analysis?.actionPlan || [];
 
   return (
     <>
@@ -119,7 +118,31 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
               Analysis
             </h3>
             <div className="analysis-status">{analysis.status}</div>
-            <ReactMarkdown remarkPlugins={remarkGfm} >{userResultAnalysis}</ReactMarkdown>
+            {/* <ReactMarkdown remarkPlugins={remarkGfm} >{userResultAnalysis}</ReactMarkdown> */}
+            <div className="analysis-content">
+              <h3>✅ Solid knowledge of:</h3>
+              <ul className="analysis-list">
+                {solidKnowledge.map((item, index) => (
+                  <li key={index} className="analysis-point">{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="analysis-content">
+              <h3>⚠️ Areas to improve:</h3>
+              <ul className="analysis-list">
+                {areasToImprove.map((item, index) => (
+                  <li key={index} className="analysis-point">{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="analysis-content">
+              <h3>💡 Action plan:</h3>
+              <ul className="analysis-list">
+                {actionPlan.map((item, index) => (
+                  <li key={index} className="analysis-point">{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
         <button onClick={resetQuiz} className="restart-button">

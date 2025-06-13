@@ -152,7 +152,22 @@
   margin-bottom: 5px;
   text-align: center;
 }
-
+.analysis-content{
+  text-align: left;
+  margin-bottom: 5px;
+}
+.analysis-list{
+list-style-type: disc;
+}
+.analysis-list li {
+margin-left: 30px;
+  color: #374151;
+}
+.analysis-content h3{
+  color: #374151;
+  font-weight: 600;
+  font-size: medium;
+}
 @media (max-width: 480px) {
   .completion-icon {
     font-size: 1.5rem;
