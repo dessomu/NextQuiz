@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect, useContext } from "react";
 import "./result.css";
 import UseContext from "../../context/UseContext";
 
-const AnimatedCircle = ({percentage}) => {
+const AnimatedCircle = ({ percentage }) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
 
   // Animate the percentage on mount
@@ -24,15 +24,15 @@ const AnimatedCircle = ({percentage}) => {
 
   return (
     <>
-      <div className="quiz-result-content">
-        <div className="circle-container">
-          <svg className="circle-svg" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r={radius} className="circle-background" />
+      <div className="result-progress">
+        <div className="circle-wrapper">
+          <svg className="progress-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r={radius} className="ring-bg" />
             <circle
               cx="60"
               cy="60"
               r={radius}
-              className={`circle-progress ${
+              className={`ring-progress ${
                 percentage >= 80
                   ? "excellent"
                   : percentage >= 60
@@ -45,8 +45,9 @@ const AnimatedCircle = ({percentage}) => {
               }}
             />
           </svg>
+
           <div
-            className={`percentage-text ${
+            className={`ring-text ${
               percentage >= 80
                 ? "excellent"
                 : percentage >= 60
@@ -99,54 +100,69 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
 
   return (
     <>
-      <div className="completion-section">
-        <h2 className="completion-title">Another Step Forward</h2>
-        <h3>{topic}</h3>
-        <AnimatedCircle percentage={percentage} />
-        <div className="score-info">
-          <p className="score-text">
-            You got <strong style={{color:"#10b981"}}>{correctAnswers}</strong>/
-            <strong>{totalQuestions}</strong> correct.
+      <div className="result-card">
+        {/* HEADER */}
+        <header className="result-header">
+          <h2 className="result-title">Another Step Forward 🚀</h2>
+          <span className="result-topic">{topic}</span>
+        </header>
+
+        {/* SCORE */}
+        <section className="result-score">
+          <AnimatedCircle percentage={percentage} />
+
+          <p className="score-line">
+            <span className="score-strong">{correctAnswers}</span>/
+            {totalQuestions} correct
           </p>
+
           <p className="encouragement">{getEncouragementMessage(percentage)}</p>
-        </div>
-        <div className="sections-container">
-          {/* Analysis Section */}
-          <div className="section">
-            <h3 className="section-title">
-              <span className="section-icon">🎯</span>
-              Analysis
-            </h3>
-            <div className="analysis-status">{analysis.status}</div>
-            {/* <ReactMarkdown remarkPlugins={remarkGfm} >{userResultAnalysis}</ReactMarkdown> */}
-            <div className="analysis-content">
-              <h3>✅ Solid knowledge of:</h3>
-              <ul className="analysis-list">
-                {solidKnowledge.map((item, index) => (
-                  <li key={index} className="analysis-point">{item}</li>
+        </section>
+
+        {/* ANALYSIS */}
+        <section className="result-analysis">
+          <div className="analysis-header">
+            🎯 <span>Performance Breakdown</span>
+          </div>
+
+          <div className="analysis-status">{analysis.status}</div>
+
+          <div className="analysis-grid">
+            {/* Solid */}
+            <div className="analysis-box success">
+              <h3>✅ Strengths</h3>
+              <ul>
+                {solidKnowledge.map((item, i) => (
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </div>
-            <div className="analysis-content">
-              <h3>⚠️ Areas to improve:</h3>
-              <ul className="analysis-list">
-                {areasToImprove.map((item, index) => (
-                  <li key={index} className="analysis-point">{item}</li>
+
+            {/* Improve */}
+            <div className="analysis-box warning">
+              <h3>⚠️ Improve</h3>
+              <ul>
+                {areasToImprove.map((item, i) => (
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </div>
-            <div className="analysis-content">
-              <h3>💡 Action plan:</h3>
-              <ul className="analysis-list">
-                {actionPlan.map((item, index) => (
-                  <li key={index} className="analysis-point">{item}</li>
+
+            {/* Action */}
+            <div className="analysis-box info">
+              <h3>💡 Action Plan</h3>
+              <ul>
+                {actionPlan.map((item, i) => (
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
-        <button onClick={resetQuiz} className="restart-button">
-        Challenge Me Again
+        </section>
+
+        {/* CTA */}
+        <button className="restart-btn" onClick={resetQuiz}>
+          Challenge Me Again
         </button>
       </div>
     </>

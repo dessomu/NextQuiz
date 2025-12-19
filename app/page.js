@@ -94,59 +94,47 @@ export default function Home() {
   return (
     <>
       {quizStarted ? (
-        <div className="quiz-container">
+        <div className="quiz-shell">
           <QuizCard quizData={quizData} />
         </div>
       ) : (
-        <div className="quiz-container">
+        <div className="quiz-shell">
           <div className="quiz-card">
-            <div className="header-section">
-              <div className="icon-wrapper">
-                <div className="brain-icon">🧠</div>
-              </div>
-              <h1 className="main-title">Hey, I&apos;m Nemo</h1>
-              <p className="subtitle">
-                Let me craft challenging quizzes and break down your knowledge
-                with detailed analysis.
-              </p>
-            </div>
+            <header className="quiz-header">
+              <div className="logo">🧠</div>
 
-            <div className="form-section">
-              <div className="input-group">
-                <input
-                  id="topic"
-                  type="text"
-                  value={topic || ""}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Diabetes, Disney, or Democracy  - what's on your mind!"
-                  className="topic-input"
-                />
-              </div>
+              <h1 className="title">
+                Hi, I&apos;m <span>Nemo</span>
+              </h1>
+
+              <p className="description">
+                I create thoughtful quizzes and break down your understanding
+                with clear insights.
+              </p>
+            </header>
+
+            <section className="quiz-form">
+              <input
+                type="text"
+                value={topic || ""}
+                onChange={(e) => setTopic(e.target.value)}
+                placeholder="e.g. Diabetes, Disney, Democracy"
+                className="input"
+              />
 
               <button
                 onClick={generateQuiz}
-                className={`${
-                  loading ? "start-button loading" : "start-button"
-                }`}
+                className={`btn ${loading ? "loading" : ""}`}
+                disabled={loading}
               >
-                {!loading && <span className="button-icon">⚡</span>}
-                {loading ? "Crafting.." : "Start"}
-                {loading && <span className="timer-icon">⏳</span>}
+                {loading ? "Crafting…" : "Start Quiz"}
+                {loading && <span className="spinner">⏳</span>}
               </button>
-            </div>
+            </section>
 
-            <div className="features-section">
-              {/* <p className="features-label">Features</p> */}
-              <div className="feature">
-                <span>Context-Aware</span>
-              </div>
-              <div className="feature">
-                <span>AI Powered</span>
-              </div>
-              <div className="feature">
-                <span>Insightful</span>
-              </div>
-            </div>
+            <footer className="quiz-footer">
+              <p>“Learning never really ends.”</p>
+            </footer>
           </div>
         </div>
       )}
