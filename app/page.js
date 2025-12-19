@@ -9,7 +9,8 @@ export default function Home() {
   const [error, setError] = useState("");
   const [quizData, setQuizData] = useState([]);
 
-  const {  topic, setTopic, quizStarted, setQuizStarted } = useContext(UseContext);
+  const { topic, setTopic, quizStarted, setQuizStarted } =
+    useContext(UseContext);
 
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * (20 - 5 + 1)) + 5;
@@ -34,33 +35,34 @@ export default function Home() {
         explanation: "explanation text"
       }]`;
 
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`, // Replace with your OpenRouter API key
-          "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
-          "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          "model": "deepseek/deepseek-r1-0528:free",
-          "messages": [
-            {
-              "role": "user",
-              "content": prompt,
-            }
-          ]
-        })
-      });
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`, // Replace with your OpenRouter API key
+            "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
+            "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "deepseek/deepseek-r1-0528:free",
+            messages: [
+              {
+                role: "user",
+                content: prompt,
+              },
+            ],
+          }),
+        }
+      );
 
       const data = await response.json();
-      
+
       const markdownText =
         data.choices?.[0]?.message?.content || "No response received.";
-        console.log("Markdown Text:", markdownText);
-        
-        
-        
+      console.log("Markdown Text:", markdownText);
+
       function sanitizeJSON(responseText) {
         // Remove LaTeX boxed syntax
         responseText = responseText.replace(/\\boxed\{([\s\S]*?)\}/g, "$1");
@@ -93,33 +95,20 @@ export default function Home() {
     <>
       {quizStarted ? (
         <div className="quiz-container">
-          <div className="floating-orbs">
-            <div className="orb orb-1"></div>
-            <div className="orb orb-2"></div>
-            <div className="orb orb-3"></div>
-            <div className="orb orb-4"></div>
-            <div className="orb orb-5"></div>
-            <div className="orb orb-6"></div>
-          </div>
-          <QuizCard quizData={quizData}/>
+          <QuizCard quizData={quizData} />
         </div>
       ) : (
         <div className="quiz-container">
-          <div className="floating-orbs">
-            <div className="orb orb-1"></div>
-            <div className="orb orb-2"></div>
-            <div className="orb orb-3"></div>
-            <div className="orb orb-4"></div>
-            <div className="orb orb-5"></div>
-            <div className="orb orb-6"></div>
-          </div>
           <div className="quiz-card">
             <div className="header-section">
               <div className="icon-wrapper">
                 <div className="brain-icon">🧠</div>
               </div>
               <h1 className="main-title">Hey, I&apos;m Nemo</h1>
-              <p className="subtitle">Let me craft challenging quizzes and break down your knowledge with detailed analysis.</p>
+              <p className="subtitle">
+                Let me craft challenging quizzes and break down your knowledge
+                with detailed analysis.
+              </p>
             </div>
 
             <div className="form-section">
@@ -129,12 +118,17 @@ export default function Home() {
                   type="text"
                   value={topic || ""}
                   onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Diabetes, Disney, or Democracy  - what&apos;s on your mind!"
+                  placeholder="Diabetes, Disney, or Democracy  - what's on your mind!"
                   className="topic-input"
                 />
               </div>
 
-              <button onClick={generateQuiz} className={`${loading ? "start-button loading" : "start-button"}`}>
+              <button
+                onClick={generateQuiz}
+                className={`${
+                  loading ? "start-button loading" : "start-button"
+                }`}
+              >
                 {!loading && <span className="button-icon">⚡</span>}
                 {loading ? "Crafting.." : "Start"}
                 {loading && <span className="timer-icon">⏳</span>}
@@ -144,15 +138,12 @@ export default function Home() {
             <div className="features-section">
               {/* <p className="features-label">Features</p> */}
               <div className="feature">
-                <div className="feature-icon">🎯</div>
                 <span>Context-Aware</span>
               </div>
               <div className="feature">
-                <div className="feature-icon">🚀</div>
                 <span>AI Powered</span>
               </div>
               <div className="feature">
-                <div className="feature-icon">📊</div>
                 <span>Insightful</span>
               </div>
             </div>
