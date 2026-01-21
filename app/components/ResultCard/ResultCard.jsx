@@ -122,7 +122,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
         {/* ANALYSIS */}
         <section className="result-analysis">
           <div className="analysis-header">
-            🎯 <span>Performance Breakdown</span>
+            <span>Performance Breakdown</span>
           </div>
 
           <div className="analysis-status">{analysis.status}</div>

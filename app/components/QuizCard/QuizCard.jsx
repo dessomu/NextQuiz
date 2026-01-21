@@ -65,24 +65,24 @@ const QuizCard = (quizData) => {
     const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide analysis in this JSON format: {
   "analysis": {
     "solidKnowledge": [
-      "knowledge point 1- within 3-5 words",
-      "knowledge point 2 - within 3-5 words",
-      "knowledge point 3 - within 3-5 words"
+      "knowledge pointn 1",
+      "knowledge point 2",
+      "knowledge point 3"
     ],
     "areasToImprove": [
-      "improvement point 1 - within 3-5 words",
-      "improvement point 2 - within 3-5 words",
-      "improvement point 3 - within 3-5 words"
+      "improvement point 1",
+      "improvement point 2",
+      "improvement point 3"
     ],
     "actionPlan": [
-      "action plan 1 - within 3-5 words",
-      "action plan 2 - within 3-5 words",
-      "action plan 3 - within 3-5 words"
+      "action plan 1",
+      "action plan 2",
+      "action plan 3"
       
     ]
   }
 }
-.Do not include comments, explanations, or extra characters. The response should strictly be a JSON object or array.`;
+.Do not include comments, explanations, or extra characters. Each point should be within 3-5 words. The response should strictly be a JSON object or array.`;
 
     try {
       const response = await fetch(
@@ -107,6 +107,8 @@ const QuizCard = (quizData) => {
         }
       );
       const analysisData = await response.json();
+      console.log(analysisData);
+
       let analysisText =
         analysisData.choices?.[0]?.message?.content || "No response received.";
 
@@ -246,8 +248,8 @@ const QuizCard = (quizData) => {
             <button className="primary-btn" onClick={handleNext}>
               {currentQuestion < totalQuestions - 1
                 ? "Next Question →"
-                : "Show Analysis"}
-              {analysisLoading && <span className="spinner">⏳</span>}
+                : "Show Analysis "}
+              {analysisLoading && <span className="spinner"> ⏳</span>}
             </button>
           )}
         </div>

@@ -30,6 +30,19 @@ body {
   flex-direction: column;
   gap: 2rem;
 }
+.spinner {
+  display: inline-block; /* required for transform to work */
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
 
 /* HEADER */
 .quiz-header {

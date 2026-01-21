@@ -13,7 +13,7 @@ export default function Home() {
     useContext(UseContext);
 
   useEffect(() => {
-    const randomNumber = Math.floor(Math.random() * (20 - 5 + 1)) + 5;
+    const randomNumber = Math.floor(Math.random() * (12 - 5 + 1)) + 5;
     setNumQuestions(randomNumber);
   }, [setTopic]);
 
@@ -33,7 +33,10 @@ export default function Home() {
         options: ["a", "b", "c", "d"],
         correctAnswer: "answer index",
         explanation: "explanation text"
-      }]`;
+      }]
+       
+      Extra constraints - Do not add any extra key, text or anything inside this array of objects, keep the question, options and explanation in plain english
+      `;
 
       const response = await fetch(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -58,6 +61,7 @@ export default function Home() {
       );
 
       const data = await response.json();
+      console.log(data);
 
       const markdownText =
         data.choices?.[0]?.message?.content || "No response received.";

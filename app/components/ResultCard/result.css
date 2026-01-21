@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   /* Adaptive gap */
-  gap: clamp(1.25rem, 3vw, 1.75rem);
+  gap: clamp(1rem, 3vw, 1.75rem);
 }
 
 .result-header {
@@ -19,9 +19,10 @@
 
 .result-title {
   /* Fluid font size: min 1.3rem, val 4vw, max 1.8rem */
-  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-size: clamp(1rem, 4vw, 1.8rem);
   font-weight: 700;
   line-height: 1.3;
+  margin: 0;
 }
 
 .result-topic {
@@ -39,12 +40,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
 }
 
 .score-line {
   font-size: clamp(0.9rem, 2vw, 1rem);
   color: #374151;
+  margin: 5px 0;
 }
 
 .score-strong {
@@ -57,7 +58,7 @@
   font-size: clamp(0.85rem, 2vw, 1rem);
   color: #6b7280;
   text-align: center;
-  line-height: 1.4;
+  margin: 5px 0;
   width: 100%;
   max-width: 600px; /* Prevent it from getting too wide on large screens */
 }
@@ -86,18 +87,19 @@
   display: grid;
   /* Auto-fit columns with a minimum width of 240px */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .analysis-box {
   border-radius: 14px;
-  padding: 0.85rem;
+  padding: 0.5rem;
   background: #f9fafb;
 }
 
 .analysis-box h3 {
   font-size: 0.9rem;
   margin-bottom: 0.4rem;
+  margin: 0;
 }
 
 .analysis-box ul {
@@ -110,7 +112,7 @@
   margin-bottom: 0.25rem;
 }
 
-.analysis-box.success {
+/* .analysis-box.success {
   border-left: 4px solid #10b981;
 }
 
@@ -120,7 +122,7 @@
 
 .analysis-box.info {
   border-left: 4px solid #6366f1;
-}
+} */
 
 .restart-btn {
   width: 100%;
@@ -153,8 +155,8 @@
 .circle-wrapper {
   position: relative;
   /* Adaptive circle size: min 120px, max 160px */
-  width: clamp(120px, 20vw, 160px);
-  height: clamp(120px, 20vw, 160px);
+  width: clamp(80px, 20vw, 120px);
+  height: clamp(80px, 20vw, 120px);
 }
 
 /* SVG */
@@ -205,7 +207,7 @@
   display: grid;
   place-items: center;
   /* Fluid font size for the percentage */
-  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-size: clamp(0.9rem, 4vw, 1.8rem);
   font-weight: 700;
 }
 
@@ -217,5 +219,44 @@
 @media (min-width: 768px) {
   .result-card {
     max-width: 880px;
+  }
+  .result-topic {
+    margin-top: 1rem;
+  }
+  .score-line {
+    margin: 0.7rem 0;
+  }
+  .encouragement {
+    margin: 0.7rem 0;
+  }
+  .analysis-grid {
+    gap: 0.75rem;
+  }
+  .restart-btn {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .result-card {
+    max-width: 880px;
+  }
+  .result-topic {
+    margin-top: 1.2rem;
+  }
+  .score-line {
+    margin: 0.5rem 0;
+  }
+  .encouragement {
+    margin: 0.5rem 0;
+  }
+  .analysis-grid {
+    gap: 0.75rem;
+  }
+  .analysis-box {
+    padding: 0.8rem;
+  }
+  .restart-btn {
+    font-size: 1rem;
   }
 }
