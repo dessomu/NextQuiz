@@ -128,13 +128,11 @@ const QuizCard = (quizData) => {
 
   if (quizCompleted && userResultAnalysis) {
     return (
-      <div className="quiz-play-card">
-        <ResultCard
-          resetQuiz={resetQuiz}
-          correctAnswers={correctAnswers}
-          totalQuestions={totalQuestions}
-        />
-      </div>
+      <ResultCard
+        resetQuiz={resetQuiz}
+        correctAnswers={correctAnswers}
+        totalQuestions={totalQuestions}
+      />
     );
   }
 
@@ -148,8 +146,8 @@ const QuizCard = (quizData) => {
           </span>
 
           <div className="scores">
-            <span className="score correct">✓ {correctAnswers}</span>
-            <span className="score incorrect">✗ {incorrectAnswers}</span>
+            <span className="score correct">C: {correctAnswers}</span>
+            <span className="score incorrect">W: {incorrectAnswers}</span>
           </div>
         </div>
 
@@ -191,7 +189,7 @@ const QuizCard = (quizData) => {
         {showAnswer && (
           <div className="explanation">
             <div className="explanation-head">
-              💡 <span>Explanation</span>
+              <span>Explanation</span>
             </div>
             <p>{currentQ.explanation}</p>
           </div>
@@ -212,7 +210,7 @@ const QuizCard = (quizData) => {
               {currentQuestion < totalQuestions - 1
                 ? "Next Question →"
                 : "Show Analysis "}
-              {analysisLoading && <span className="spinner"> ⏳</span>}
+              {analysisLoading && <span className="spinner">...</span>}
             </button>
           )}
         </div>

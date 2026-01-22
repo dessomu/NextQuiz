@@ -59,16 +59,9 @@ export default function Home() {
         <div className="quiz-shell">
           <div className="quiz-card">
             <header className="quiz-header">
-              <div className="logo">🧠</div>
-
               <h1 className="title">
-                Hi, I&apos;m <span>Nemo</span>
+                 <span>Nemo</span> Here
               </h1>
-
-              <p className="description">
-                I create thoughtful quizzes and break down your understanding
-                with clear insights.
-              </p>
             </header>
 
             <section className="quiz-form">
@@ -76,7 +69,7 @@ export default function Home() {
                 type="text"
                 value={topic || ""}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="e.g. Diabetes, Disney, Democracy"
+                placeholder="What do you want to learn?"
                 className="input"
               />
 
@@ -89,10 +82,6 @@ export default function Home() {
                 {loading && <span className="spinner">⏳</span>}
               </button>
             </section>
-
-            <footer className="quiz-footer">
-              <p>“Learning never really ends.”</p>
-            </footer>
           </div>
         </div>
       )}
