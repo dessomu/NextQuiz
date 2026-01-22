@@ -60,7 +60,7 @@ export default function Home() {
           <div className="quiz-card">
             <header className="quiz-header">
               <h1 className="title">
-                 <span>Nemo</span> Here
+                <span>Nemo</span>
               </h1>
             </header>
 
