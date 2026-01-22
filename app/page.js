@@ -23,70 +23,24 @@ export default function Home() {
     setLoading(true);
     setError("");
 
-    const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
-
     try {
-      const prompt = `Generate ${numQuestions} quiz questions about ${topic} with 4 options and correct answer. Respond with valid JSON only. Do not include comments, explanations, or extra characters. The response should strictly be a JSON object or array. Format as JSON array:
-      [{
-        id: "unique number",
-        question: "question text",
-        options: ["a", "b", "c", "d"],
-        correctAnswer: "answer index",
-        explanation: "explanation text"
-      }]
-       
-      Extra constraints - Do not add any extra key, text or anything inside this array of objects, keep the question, options and explanation in plain english
-      `;
+      const response = await fetch("/api/generate-quiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          topic,
+          numQuestions,
+        }),
+      });
 
-      const response = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`, // Replace with your OpenRouter API key
-            "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
-            "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "deepseek/deepseek-r1-0528:free",
-            messages: [
-              {
-                role: "user",
-                content: prompt,
-              },
-            ],
-          }),
-        }
-      );
-
-      const data = await response.json();
-      console.log(data);
-
-      const markdownText =
-        data.choices?.[0]?.message?.content || "No response received.";
-      console.log("Markdown Text:", markdownText);
-
-      function sanitizeJSON(responseText) {
-        // Remove LaTeX boxed syntax
-        responseText = responseText.replace(/\\boxed\{([\s\S]*?)\}/g, "$1");
-
-        // Remove Markdown code block indicators (```json ... ```)
-        responseText = responseText.replace(/```json|```/g, "").trim();
-
-        // Try parsing the cleaned JSON
-        try {
-          return JSON.parse(responseText);
-        } catch (error) {
-          console.error("Invalid JSON data:", error);
-          return null;
-        }
+      if (!response.ok) {
+        throw new Error("Failed to generate quiz");
       }
 
-      // Usage:
-      const cleanJson = sanitizeJSON(markdownText);
-
-      setQuizData(cleanJson);
+      const data = await response.json();
+      setQuizData(data.quizData);
       setQuizStarted(true);
     } catch (error) {
       setError(`Error generating quiz, sorry for inconvenience`);

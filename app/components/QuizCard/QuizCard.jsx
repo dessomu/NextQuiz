@@ -59,70 +59,33 @@ const QuizCard = (quizData) => {
   };
 
   async function getAIAnalysis() {
-    const apiKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
-    const jsonString = JSON.stringify(usersResults, null, 2);
-
-    const prompt = `Analyze these answers ${jsonString} of a quiz taker on the topic: ${topic}. Provide analysis in this JSON format: {
-  "analysis": {
-    "solidKnowledge": [
-      "knowledge pointn 1",
-      "knowledge point 2",
-      "knowledge point 3"
-    ],
-    "areasToImprove": [
-      "improvement point 1",
-      "improvement point 2",
-      "improvement point 3"
-    ],
-    "actionPlan": [
-      "action plan 1",
-      "action plan 2",
-      "action plan 3"
-      
-    ]
-  }
-}
-.Do not include comments, explanations, or extra characters. Each point should be within 3-5 words. The response should strictly be a JSON object or array.`;
-
     try {
-      const response = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`, // Replace with your OpenRouter API key
-            "HTTP-Referer": "https://magenta-raindrop-e04d1a.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
-            "X-Title": "scholarsquiz", // Optional. Site title for rankings on openrouter.ai.
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "deepseek/deepseek-r1-0528:free",
-            messages: [
-              {
-                role: "user",
-                content: prompt,
-              },
-            ],
-          }),
-        }
-      );
-      const analysisData = await response.json();
-      console.log(analysisData);
+      const response = await fetch("/api/analyze-results", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          topic,
+          usersResults,
+        }),
+      });
 
-      let analysisText =
-        analysisData.choices?.[0]?.message?.content || "No response received.";
+      if (!response.ok) {
+        throw new Error("Failed to get analysis");
+      }
 
-      // Clean known unwanted markdown wrappers
-      analysisText = analysisText.replace(/```json|```/g, "").trim();
-      console.log("Analysis Text:", analysisText);
-
-      // parsing the response text to extract JSON data
-      const analysis = JSON.parse(analysisText);
-
+      const analysis = await response.json();
       return analysis;
     } catch (error) {
       console.error("Error fetching analysis:", error.message);
-      return "Error fetching analysis.";
+      return {
+        analysis: {
+          solidKnowledge: [],
+          areasToImprove: [],
+          actionPlan: [],
+        },
+      };
     }
   }
 

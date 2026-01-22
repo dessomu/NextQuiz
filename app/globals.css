@@ -28,18 +28,23 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 .spinner {
-  display: inline-block; /* required for transform to work */
-  animation: spin 2.5s linear infinite;
+  display: inline-block;
+  animation: spinStep 2.8s linear infinite;
 }
 
-@keyframes spin {
-  from {
+@keyframes spinStep {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  89.3% {
+    transform: rotate(180deg);
+  }
+
+  /* hold the final angle for 0.3s */
+  100% {
     transform: rotate(180deg);
   }
 }
@@ -71,7 +76,7 @@ body {
 
 .description {
   margin-top: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: #6b7280;
 }
@@ -88,7 +93,7 @@ body {
   padding: 0.9rem 1rem;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   outline: none;
   transition: all 0.2s ease;
 }
@@ -107,9 +112,9 @@ body {
   padding: 0.9rem;
   border-radius: 12px;
   border: none;
-  background: #6366f1;
+  background: #000000;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -117,11 +122,11 @@ body {
 
 .btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 
 .btn.loading {
-  background: #a5b4fc;
+  background: #9ca3af;
   cursor: not-allowed;
 }
 
@@ -139,7 +144,15 @@ body {
   }
 
   .title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
+  }
+  .btn {
+    font-size: 0.9rem;
+  }
+
+  .description,
+  .input {
+    font-size: 0.85rem;
   }
 }
 
@@ -147,5 +160,15 @@ body {
 @media (min-width: 1024px) {
   .quiz-card {
     max-width: 520px;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .btn {
+    font-size: 1rem;
+  }
+  .description,
+  .input {
+    font-size: 0.95rem;
   }
 }

@@ -70,25 +70,25 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
 
   // Get Encouragement Message based on score
   const getEncouragementMessage = (score) => {
-    if (score >= 90) return "Outstanding! You've mastered this topic! 🌟";
-    if (score >= 80) return "Excellent work! You're doing great! 🎉";
-    if (score >= 70) return "Good job! You're on the right track! 👍";
-    if (score >= 60) return "Nice effort! Keep practicing! 📚";
-    return "Don't give up! Practice makes perfect! 💪";
+    if (score >= 90) return "Outstanding! You've mastered this topic!";
+    if (score >= 80) return "Excellent work! You're doing great!";
+    if (score >= 70) return "Good job! You're on the right track!";
+    if (score >= 60) return "Nice effort! Keep practicing!";
+    return "Don't give up! Practice makes perfect!";
   };
   // Get analysis heading based on score
   const getAnalysis = (score) => {
     if (score >= 80) {
       return {
-        status: "Nailed It! ✅",
+        status: "Nailed It!",
       };
     } else if (score >= 60) {
       return {
-        status: "Good Progress 📈",
+        status: "Good Progress",
       };
     } else {
       return {
-        status: "Need More Practice 📖",
+        status: "Need More Practice",
       };
     }
   };
@@ -103,7 +103,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
       <div className="result-card">
         {/* HEADER */}
         <header className="result-header">
-          <h2 className="result-title">Another Step Forward 🚀</h2>
+          <h2 className="result-title">Another Step Forward</h2>
           <span className="result-topic">{topic}</span>
         </header>
 
@@ -130,7 +130,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
           <div className="analysis-grid">
             {/* Solid */}
             <div className="analysis-box success">
-              <h3>✅ Strengths</h3>
+              <h3>Strengths</h3>
               <ul>
                 {solidKnowledge.map((item, i) => (
                   <li key={i}>{item}</li>
@@ -140,7 +140,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
 
             {/* Improve */}
             <div className="analysis-box warning">
-              <h3>⚠️ Improve</h3>
+              <h3>Improve</h3>
               <ul>
                 {areasToImprove.map((item, i) => (
                   <li key={i}>{item}</li>
@@ -150,7 +150,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
 
             {/* Action */}
             <div className="analysis-box info">
-              <h3>💡 Action Plan</h3>
+              <h3>Action Plan</h3>
               <ul>
                 {actionPlan.map((item, i) => (
                   <li key={i}>{item}</li>
