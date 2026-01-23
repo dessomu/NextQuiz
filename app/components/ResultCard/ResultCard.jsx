@@ -36,8 +36,8 @@ const AnimatedCircle = ({ percentage }) => {
                 percentage >= 80
                   ? "excellent"
                   : percentage >= 60
-                  ? "good"
-                  : "needs-improvement"
+                    ? "good"
+                    : "needs-improvement"
               }`}
               style={{
                 strokeDasharray,
@@ -51,8 +51,8 @@ const AnimatedCircle = ({ percentage }) => {
               percentage >= 80
                 ? "excellent"
                 : percentage >= 60
-                ? "good"
-                : "needs-improvement"
+                  ? "good"
+                  : "needs-improvement"
             }`}
           >
             {animatedPercentage}%
@@ -67,6 +67,9 @@ const AnimatedCircle = ({ percentage }) => {
 const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   const { topic, userResultAnalysis } = useContext(UseContext);
   const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+  const [userInteracted, setUserInteracted] = useState(false);
+  const analysisRef = React.useRef(null);
+  const animationRef = React.useRef(null);
 
   // Get Encouragement Message based on score
   const getEncouragementMessage = (score) => {
@@ -98,9 +101,75 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
   const areasToImprove = userResultAnalysis?.analysis?.areasToImprove || [];
   const actionPlan = userResultAnalysis?.analysis?.actionPlan || [];
 
+  // Premium easing function for ultra-calm feel (easeInOutQuart)
+  const easeInOutQuart = (x) => {
+    return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2;
+  };
+
+  const smoothScrollTo = (target, duration) => {
+    const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+    const startPosition = window.scrollY;
+    // Scroll to slightly above the target for better visuals
+    const distance = targetPosition - startPosition - 60;
+    let startTime = null;
+
+    const animation = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutQuart(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        animationRef.current = requestAnimationFrame(animation);
+      } else {
+        animationRef.current = null;
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animation);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!userInteracted && analysisRef.current) {
+        // 2500ms duration for ultra-calm glide
+        smoothScrollTo(analysisRef.current, 2500);
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [userInteracted]);
+
+  useEffect(() => {
+    const handleUserAction = () => {
+      setUserInteracted(true);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    };
+
+    window.addEventListener("wheel", handleUserAction, { once: true });
+    window.addEventListener("touchstart", handleUserAction, { once: true });
+    window.addEventListener("keydown", handleUserAction, { once: true });
+    window.addEventListener("click", handleUserAction, { once: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleUserAction);
+      window.removeEventListener("touchstart", handleUserAction);
+      window.removeEventListener("keydown", handleUserAction);
+      window.removeEventListener("click", handleUserAction);
+    };
+  }, []);
+
   return (
     <>
-      <div className="result-card">
+      <div className="result-card animate-enter">
         {/* HEADER */}
         <header className="result-header">
           <h2 className="result-title">Another Step Forward</h2>
@@ -120,7 +189,7 @@ const ResultCard = ({ correctAnswers, totalQuestions, resetQuiz }) => {
         </section>
 
         {/* ANALYSIS */}
-        <section className="result-analysis">
+        <section className="result-analysis" ref={analysisRef}>
           <div className="analysis-header">
             <span>Performance Breakdown</span>
           </div>

@@ -137,7 +137,7 @@ const QuizCard = (quizData) => {
   }
 
   return (
-    <div className="quiz-play-card">
+    <div className="quiz-play-card animate-enter">
       {/* TOP BAR */}
       <header className="quiz-top">
         <div className="progress">
@@ -209,8 +209,14 @@ const QuizCard = (quizData) => {
             <button className="primary-btn" onClick={handleNext}>
               {currentQuestion < totalQuestions - 1
                 ? "Next Question →"
-                : "Show Analysis "}
-              {analysisLoading && <span className="spinner">...</span>}
+                : "Show Analysis"}
+              {analysisLoading && (
+                <span className="dots">
+                  <span>.</span>
+                  <span>.</span>
+                  <span>.</span>
+                </span>
+              )}
             </button>
           )}
         </div>

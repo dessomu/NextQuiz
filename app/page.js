@@ -13,7 +13,7 @@ export default function Home() {
     useContext(UseContext);
 
   useEffect(() => {
-    const randomNumber = Math.floor(Math.random() * (12 - 5 + 1)) + 5;
+    const randomNumber = Math.floor(Math.random() * (7 - 3 + 1)) + 3;
     setNumQuestions(randomNumber);
   }, [setTopic]);
 
@@ -57,7 +57,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="quiz-shell">
-          <div className="quiz-card">
+          <div className="quiz-card animate-enter">
             <header className="quiz-header">
               <h1 className="title">
                 <span>Nemo</span>
@@ -78,8 +78,18 @@ export default function Home() {
                 className={`btn ${loading ? "loading" : ""}`}
                 disabled={loading}
               >
-                {loading ? "Crafting…" : "Start Quiz"}
-                {loading && <span className="spinner">⏳</span>}
+                {loading ? (
+                  <span>
+                    Crafting{" "}
+                    <span className="dots">
+                      <span>. </span>
+                      <span>. </span>
+                      <span>.</span>
+                    </span>
+                  </span>
+                ) : (
+                  "Start Quiz"
+                )}
               </button>
             </section>
           </div>
